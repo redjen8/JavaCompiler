@@ -93,7 +93,7 @@ void pushToken(vector<string>& list, string token, string detail) {
 	*/
 
 	else if (token == "MINUS_SIGNED_INTEGER") {
-		if (list[list.size() - 2] == "RPAREN" || list[list.size() - 2] == "SIGNED_INTEGER") {
+		if (list[list.size() - 2] == "RPAREN" || list[list.size() - 2] == "SIGNED_INTEGER" || list[list.size() - 2] == "IDENTIFIER") {
 			list.push_back("ARITHMETRIC_OPERATOR");
 			list.push_back("-");
 			list.push_back("SIGNED_INTEGER");

@@ -93,15 +93,20 @@ void pushToken(vector<string>& list, string token, string detail) {
 	*/
 
 	else if (token == "MINUS_SIGNED_INTEGER") {
-		if (list[list.size() - 2] == "RPAREN" || list[list.size() - 2] == "SIGNED_INTEGER" || list[list.size() - 2] == "IDENTIFIER") {
-			list.push_back("ARITHMETRIC_OPERATOR");
-			list.push_back("-");
-			list.push_back("SIGNED_INTEGER");
-			list.push_back(detail.substr(1, detail.size()));
-			return;
+		if (list.size() == 0) {
+			str = "SIGNED_INTEGER";
 		}
 		else {
-			str = "SIGNED_INTEGER";
+			if (list[list.size() - 2] == "RPAREN" || list[list.size() - 2] == "SIGNED_INTEGER" || list[list.size() - 2] == "IDENTIFIER") {
+				list.push_back("ARITHMETRIC_OPERATOR");
+				list.push_back("-");
+				list.push_back("SIGNED_INTEGER");
+				list.push_back(detail.substr(1, detail.size()));
+				return;
+			}
+			else {
+				str = "SIGNED_INTEGER";
+			}
 		}
 	}
 
@@ -114,6 +119,14 @@ void pushToken(vector<string>& list, string token, string detail) {
 		else if (isThere(variableList, detail))	str = "VARIABLE_TYPE";
 		else if (isThere(booleanList, detail))	str = "BOOLEAN_STRING";
 		else str = "IDENTIFIER";
+	}
+	else if (token == "SINGLE_CHARACTER") {
+		str = token;
+		detail = detail.substr(1, 1);
+	}
+	else if (token == "LITERAL_STRING") {
+		str = token;
+		detail = detail.substr(1, detail.size() - 2);
 	}
 	else {
 		str = token;
@@ -129,10 +142,10 @@ void init() {
 
 	node temp_node;
 	temp_node.token = "";
-	int start_terminal_length1 = 100;
+	int start_terminal_length1 = 25;
 	int count = 0;
 	int i;
-	for (i = 0; i < 200; i++) {
+	for (i = 0; i < 45; i++) {
 		nodeList.push_back(temp_node);
 	}
 	// >=, >
@@ -193,28 +206,23 @@ void init() {
 	addEdge(8, '0', 8);
 
 	//negative digit or minus + positive digit
-	addEdge(0, '-', 24);
-	setTerminal(24, "ARITHMETRIC_OPERATOR");
-	addEdge(24, '1', 25);
-	setTerminal(25, "MINUS_SIGNED_INTEGER");
-	addEdge(25, '0', 25);
-	addEdge(25, '1', 25);
+	addEdge(0, '-', 23);
+	setTerminal(23, "ARITHMETRIC_OPERATOR");
+	addEdge(23, '1', 24);
+	setTerminal(24, "MINUS_SIGNED_INTEGER");
+	addEdge(24, '0', 24);
+	addEdge(24, '1', 24);
 
 	setTerminal(8, "SIGNED_INTEGER");
 
 	//letter & identifier
 	addEdge(0, 'l', 1);
+	addEdge(0, '_', 1);
 	addEdge(1, 'l', 1);
-	addEdge(1, '_', 23);
-	addEdge(1, '1', 23);
-	addEdge(1, '0', 23);
-	addEdge(0, '_', 23);
-	addEdge(23, '_', 23);
-	addEdge(23, '1', 23);
-	addEdge(23, '0', 23);
-	addEdge(23, 'l', 23);
+	addEdge(1, '_', 1);
+	addEdge(1, '1', 1);
+	addEdge(1, '0', 1);
 	setTerminal(1, "STRING");
-	setTerminal(23, "STRING");	//Temp Token
 
 	// terminals with depth 1
 	setTerminal(start_terminal_length1 + count, "SIGNED_INTEGER");

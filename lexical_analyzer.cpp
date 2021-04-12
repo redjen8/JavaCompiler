@@ -263,10 +263,10 @@ void init() {
 	addEdge(0, ',', start_terminal_length1 + count++);
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 	string str;
 	string temp;
-	vector<string> token;
+	vector<string> result_token;
 	fstream fs;
 
 	int idx;
@@ -278,9 +278,16 @@ int main() {
 	bool flag;
 	bool flag_error = false;
 
-	fs.open("test.java");
+	if (argc == 1) {
+		cout << "Please input file name." << endl << "(ex) lexical_analyzer.exe test.java";
+		return 1;
+	}
+	cout << argc << endl;
+	cout << argv[0] << endl;
+	cout << argv[1] << endl;
+	fs.open(argv[1]);
 	if (!fs) {
-		cout << "Can't find a file.";
+		cout << "Can't find file " << argv[1];
 		return 1;
 	}
 
@@ -294,7 +301,7 @@ int main() {
 		idx = 0;
 		startIdx = 0;
 		nowNode = 0;
-		prevTokenNum = token.size();
+		prevTokenNum = result_token.size();
 
 		while (idx <= str.length()) {
 			flag = false;
@@ -314,18 +321,19 @@ int main() {
 					}
 					//Exception
 					cout << "Error occurs with symbol [ " << str[idx] << " ] ";
-					if (token.size() - prevTokenNum > 0) {
-						cout << " following [ " << token.back() << " ]" << endl;
+					if (result_token.size() - prevTokenNum > 0) {
+						cout << " following [ " << result_token.back() << " ]" << endl;
 					}
 					else {
 						cout << " at first of line : " << endl;
 					}
 					cout << "at line " << line << " : " << str << endl << endl << endl;
 					flag_error = true;
-					break;
+					return 1;
+					//break;
 				}
 				temp = str.substr(startIdx, idx - startIdx);
-				pushToken(token, nodeList[nowNode].token, temp);
+				pushToken(result_token, nodeList[nowNode].token, temp);
 				nowNode = 0;
 				startIdx = idx;
 				continue;
@@ -338,31 +346,46 @@ int main() {
 	}
 
 	// output
-	for (i = 1; i < token.size(); i += 2) {
-		cout << token[i - 1] << " : ";
+	for (i = 1; i < result_token.size(); i += 2) {
+		cout << result_token[i - 1] << " : ";
 
-		if (token[i] == "\n") {
+		if (result_token[i] == "\n") {
 			cout << "NEW_LINE" << endl;
 		}
-		else if (token[i] == "\t") {
+		else if (result_token[i] == "\t") {
 			cout << "TAB" << endl;
 		}
-		else if (token[i] == " ") {
+		else if (result_token[i] == " ") {
 			cout << "BLANK" << endl;
 		}
 		else {
-			cout << token[i] << endl;
+			cout << result_token[i] << endl;
 		}
 	}
 
 	fs.close();
+
+	string output_name = argv[1];
+	int point_index = 0;
+	for (i = output_name.length(); i > 0; i--) {
+		if (output_name[i] == '.') {
+			point_index = i;
+			break;
+		}
+	}
+
+	output_name = output_name.substr(0, i) + "_out.txt";
+
 	if (!flag_error) {
-		fs.open("test.out", fstream::out);
-		for (i = 0; i < token.size(); i += 2) {
-			fs << token[i] << "\t" << token[i + 1] << endl;
+		fs.open(output_name, fstream::out);
+		if (!fs) {
+			cout << "Can't make file " << "output_name";
+		}
+		for (i = 0; i < result_token.size(); i += 2) {
+			fs << result_token[i] << "\t" << result_token[i + 1] << endl;
 		}
 		fs.close();
 	}
 
-
+	cout << endl << output_name << " created." << endl;
 }

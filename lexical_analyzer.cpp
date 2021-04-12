@@ -282,9 +282,7 @@ int main(int argc, char* argv[]) {
 		cout << "Please input file name." << endl << "(ex) lexical_analyzer.exe test.java";
 		return 1;
 	}
-	cout << argc << endl;
-	cout << argv[0] << endl;
-	cout << argv[1] << endl;
+
 	fs.open(argv[1]);
 	if (!fs) {
 		cout << "Can't find file " << argv[1];
@@ -380,6 +378,7 @@ int main(int argc, char* argv[]) {
 		fs.open(output_name, fstream::out);
 		if (!fs) {
 			cout << "Can't make file " << "output_name";
+			return 1;
 		}
 		for (i = 0; i < result_token.size(); i += 2) {
 			fs << result_token[i] << "\t" << result_token[i + 1] << endl;

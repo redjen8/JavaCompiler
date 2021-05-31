@@ -652,17 +652,29 @@ void insertInputStream(string a, string b)
 	}
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+	ifstream inf;
+	string inputBuf;
+	if (argc == 1)
+	{
+		cout << "please input file name. " << endl << "ex) syntax_anaylzer test_out.txt";
+		return 1;
+	}
+	inf.open(argv[1]);
+	if (!inf)
+	{
+		cout << "Cannot find file " << argv[1] << endl;
+		return 1;
+	}
+
 	initCFG();
 	initStateAction();
 	initStateGoto();
 	parseStack.push_back("0");
 	parseStackTop = 0;
 	currentState = 0;
-	ifstream inf;
-	string inputBuf;
-	inf.open("test2_out_m.txt");
+	
 	while (!inf.eof())
 	{
 		getline(inf, inputBuf);

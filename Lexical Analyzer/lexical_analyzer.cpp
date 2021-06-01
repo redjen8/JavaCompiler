@@ -98,7 +98,7 @@ void pushToken(vector<string>& list, string token, string detail) {
 		}
 		else {
 			if (list[list.size() - 2] == "RPAREN" || list[list.size() - 2] == "SIGNED_INTEGER" || list[list.size() - 2] == "IDENTIFIER") {
-				list.push_back("ARITHMETRIC_OPERATOR");
+				list.push_back("ARITHMETIC_OPERATOR");
 				list.push_back("-");
 				list.push_back("SIGNED_INTEGER");
 				list.push_back(detail.substr(1, detail.size()));
@@ -207,7 +207,7 @@ void init() {
 
 	//negative digit or minus + positive digit
 	addEdge(0, '-', 23);
-	setTerminal(23, "ARITHMETRIC_OPERATOR");
+	setTerminal(23, "ARITHMETIC_OPERATOR");
 	addEdge(23, '1', 24);
 	setTerminal(24, "MINUS_SIGNED_INTEGER");
 	addEdge(24, '0', 24);
@@ -250,7 +250,7 @@ void init() {
 	addEdge(0, '\t', start_terminal_length1 + count++);
 
 	for (i = 0; i < 3; i++) {
-		setTerminal(start_terminal_length1 + count + i, "ARITHMETRIC_OPERATOR");
+		setTerminal(start_terminal_length1 + count + i, "ARITHMETIC_OPERATOR");
 	}
 	addEdge(0, '+', start_terminal_length1 + count++);
 	addEdge(0, '*', start_terminal_length1 + count++);

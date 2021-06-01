@@ -692,7 +692,7 @@ int main(int argc, char* argv[])
 	originalToken.push_back(endSymbol);
 	for (int i = 0; i < (int)inputStream.size(); i++)
 	{
-		cout << inputStream[i] << ' ' << originalToken[i] << endl;
+		//cout << inputStream[i] << ' ' << originalToken[i] << endl;
 	}
 	cout << endl;
 	while (true)
@@ -715,7 +715,7 @@ int main(int argc, char* argv[])
 				cout << endl << "ACCEPT! Parse End.." << endl;
 				break;
 			}
-			printParseStack();
+			//printParseStack();
 		}
 		else //스택의 최상단 원소가 nonTerminal인 경우
 		{
@@ -729,7 +729,7 @@ int main(int argc, char* argv[])
 				break;
 				//error
 			}
-			printParseStack();
+			//printParseStack();
 		}
 	}
 	return 0;

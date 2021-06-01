@@ -1,9 +1,26 @@
--0
-0abc0
-123if
-123if0
-' '
-a-1
-a--1
-int main(){char if123='1';int 0a=a+-1;return -0;}
-"Hate Math"
+String lexical;
+boolean syntax;
+
+class project{
+	String submitlexical(String lexical){
+		if(true < false){
+
+		}else{
+			
+		}	
+		
+		return lexical;
+	}
+
+	char submitsyntax(boolean syntax){
+		while(true == true){
+			syntax = (1 + 3) * (4 - 2); 
+		}
+
+		return syntax;
+	}	
+	
+	int getscore(String lexical, boolean syntax){
+		return A;
+	}
+}

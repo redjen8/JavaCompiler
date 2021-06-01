@@ -7,7 +7,7 @@ using namespace std;
 typedef struct edge {
 	char c; // matching Character
 	int next; // destination Node
-};
+} edge;
 
 typedef struct node {
 	vector<edge> edgev; // Vector of Node's Edges
